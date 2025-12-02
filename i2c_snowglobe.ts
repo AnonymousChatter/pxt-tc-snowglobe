@@ -53,6 +53,7 @@ namespace tomatoCube {
      */
     //% subcategory=SnowGlobe(I2C)
     //% blockId="flip_oled" block="Rotate OLED with addr %addr"
+    //% addr.defl = 0x3C
     //% weight=102 
     export function flip_oled(addr: number):void {
         _I2CAddr = addr
@@ -102,10 +103,13 @@ namespace tomatoCube {
     //% second.max=59
     //% day.min=1
     //% day.max=31
+    //% day.defl=1
     //% month.min=1
     //% month.max=12
+    //% month.defl=1
     //% year.min=25
     //% year.max=50
+    //% year.defl=25
     //% weight=100 
     export function setTime(hour: number, minute: number, second: number,
                                day: number, month: number, year: number, dow: TC_DayOfWeek): void {
