@@ -23,7 +23,8 @@
   //% color=#0fbc11 icon="\uF069" block="TomatoCube"
 namespace tomatoCube {
     let DS3231_ADDR = 0x68
-    let OLED_ADDR = 0x3C
+    //let OLED_ADDR = 0x3C
+    let _I2CAddr = 0x3C;
     
     // Send a single OLED SSD1306 command
     function oledCmd (cmd: number) {
@@ -32,7 +33,7 @@ namespace tomatoCube {
         // 0x00 = command mode
         buf[0] = 0
         buf[1] = cmd
-        pins.i2cWriteBuffer(OLED_ADDR, buf)
+        pins.i2cWriteBuffer(_I2CAddr, buf)
     }
 
     // BCD -> decimal for DS3231
@@ -51,10 +52,10 @@ namespace tomatoCube {
      * Flip OLED Display.
      */
     //% subcategory=SnowGlobe(I2C)
-    //% blockId="flip_oled" block="Rotate OLED Display"
-    //% weight=98 
-    export function flip_oled():void {
-        
+    //% blockId="flip_oled" block="Rotate OLED with addr %addr"
+    //% weight=102 
+    export function flip_oled(addr: number):void {
+        _I2CAddr = addr
         // Flip OLED
         oledCmd(160)
         oledCmd(192)
@@ -68,7 +69,7 @@ namespace tomatoCube {
      */
     //% subcategory=SnowGlobe(I2C)
     //% blockId="read_rtc_time" block="Get the current time from DS3231 as "HH:MM:SS""
-    //% weight=99 
+    //% weight=101 
     export function readTime(): string {
         
         // point to register 0x00
@@ -92,7 +93,7 @@ namespace tomatoCube {
      * Set current time to RTC IC.
      */
     //% subcategory=SnowGlobe(I2C)
-    //% blockId="set_rtc_time" block="Set the current time of %hour : %minute : %second | Date of %day / %month / %year | %dow to DS3231"
+    //% blockId="set_rtc_time" block="Set the current time of %hour|: %minute|: %second| Date of %day|/ %month|/ %year|Day of %dow|to DS3231"
     //% hour.min=0
     //% hour.max=23
     //% minute.min=0
