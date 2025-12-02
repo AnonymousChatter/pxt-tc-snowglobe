@@ -8,15 +8,15 @@
       //% block="Tuesday"
       TUESDAY = 2,
       //% block="Wednesday"
-      TUESDAY = 3,
+      WEDNESDAY = 3,
       //% block="Thursday"
-      TUESDAY = 4,
+      THURSDAY = 4,
       //% block="Friday"
-      TUESDAY = 5,
+      FRIDAY = 5,
       //% block="Saturday"
-      TUESDAY = 6,
+      SATURDAY = 6,
       //% block="Sunday"
-      TUESDAY = 7,
+      SUNDAY = 7,
   }
 
 
