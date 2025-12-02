@@ -20,7 +20,7 @@
   }
 
 
-  //% color=#0fbc11 icon="\u272a" block="TomatoCube"
+  //% color=#0fbc11 icon="\uF069" block="TomatoCube"
 namespace tomatoCube {
     let DS3231_ADDR = 0x68
     let OLED_ADDR = 0x3C
