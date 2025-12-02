@@ -142,7 +142,7 @@ namespace tomatoCube {
     export function readDayName(): string {
        let dow = readDay()
    
-       let names = ["?", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+       let names = ["?", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
    
        if (dow < 1 || dow > 7) return "?"
        return names[dow]
