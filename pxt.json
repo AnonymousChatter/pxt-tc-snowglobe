@@ -1,6 +1,6 @@
 {
     "name": "TC-Snowglobe",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Makecode block for TC SnowGlobe table-top toy",
     "license": "MIT",
     "dependencies": {
