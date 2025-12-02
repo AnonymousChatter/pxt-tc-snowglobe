@@ -54,7 +54,7 @@ namespace tomatoCube {
     //% subcategory=SnowGlobe(I2C)
     //% blockId="flip_oled" block="Rotate OLED with addr %addr"
     //% addr.defl = 0x3C
-    //% weight=102 
+    //% weight=105 
     export function flip_oled(addr: number):void {
         _I2CAddr = addr
         // Flip OLED
@@ -70,7 +70,7 @@ namespace tomatoCube {
      */
     //% subcategory=SnowGlobe(I2C)
     //% blockId="read_rtc_time" block="Get the current time from DS3231 as HH:MM:SS"
-    //% weight=101 
+    //% weight=104 
     export function readTime(): string {
         
         // point to register 0x00
@@ -89,6 +89,65 @@ namespace tomatoCube {
         return `${hh}:${mm}:${ss}`
         
     }
+
+    /**
+     * Read Date from RTC IC.
+     */
+    //% subcategory=SnowGlobe(I2C)
+    //% blockId="read_rtc_date" block="Get the current date from DS3231 as YYYY-MM-DD"
+    //% weight=103
+    export function readDate(): string {
+      // Point to register 0x00
+      let buf = pins.createBuffer(1)
+      buf.setNumber(NumberFormat.UInt8BE, 0, 0x00)
+      pins.i2cWriteBuffer(DS3231_ADDR, buf)
+  
+      // Read 7 bytes: sec, min, hr, DOW, day, month, year
+      let data = pins.i2cReadBuffer(DS3231_ADDR, 7)
+  
+      let day = bcdToDec(data.getNumber(NumberFormat.UInt8BE, 4))
+      let month = bcdToDec(data.getNumber(NumberFormat.UInt8BE, 5) & 0x1F) // mask century bit
+      let year = bcdToDec(data.getNumber(NumberFormat.UInt8BE, 6))
+  
+      // Format as YYYY-MM-DD (assuming 20xx)
+      let yyyy = 2000 + year
+      let mm = ("0" + month).slice(-2)
+      let dd = ("0" + day).slice(-2)
+  
+      return `${yyyy}-${mm}-${dd}`
+    }
+
+    /**
+     * Read day from RTC IC.
+     */
+    //% subcategory=SnowGlobe(I2C)
+    //% blockId="read_rtc_dow" block="Get the current DOW from DS3231 as 1–7"
+    //% weight=102 
+    export function readDay(): number {
+       // Point to 0x03 (day-of-week register)
+       let buf = pins.createBuffer(1)
+       buf.setNumber(NumberFormat.UInt8BE, 0, 0x03)
+       pins.i2cWriteBuffer(DS3231_ADDR, buf)
+   
+       let d = pins.i2cReadNumber(DS3231_ADDR, NumberFormat.UInt8BE, false)
+       return bcdToDec(d)
+    }
+
+    /**
+     * Read time from RTC IC.
+     */
+    //% subcategory=SnowGlobe(I2C)
+    //% blockId="read_rtc_day" block="Get the current day from DS3231 as Sun, Mon, Tue.."
+    //% weight=101 
+    export function readDayName(): string {
+       let dow = readDay()
+   
+       let names = ["?", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+   
+       if (dow < 1 || dow > 7) return "?"
+       return names[dow]
+    }
+
 
     /**
      * Set current time to RTC IC.
