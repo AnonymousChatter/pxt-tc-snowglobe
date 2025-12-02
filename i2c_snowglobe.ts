@@ -68,7 +68,7 @@ namespace tomatoCube {
      * Read time from RTC IC.
      */
     //% subcategory=SnowGlobe(I2C)
-    //% blockId="read_rtc_time" block="Get the current time from DS3231 as "HH:MM:SS""
+    //% blockId="read_rtc_time" block="Get the current time from DS3231 as HH:MM:SS"
     //% weight=101 
     export function readTime(): string {
         
